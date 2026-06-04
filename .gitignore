@@ -1,0 +1,12 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# zensical build output
+site/
+
+# os / editor junk
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,83 @@
+/* Override the dark (slate) scheme with your exact palette */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color:        #111113;
+  --md-default-fg-color:        #d4d4d4;
+  --md-default-fg-color--light: #6b7280;
+  --md-default-fg-color--lighter: #6b7280;
+  --md-default-fg-color--lightest: #252528;
+
+  --md-primary-fg-color:  #111113;
+  --md-primary-bg-color:  #d4d4d4;
+
+  --md-accent-fg-color:   #FF85BB;
+
+  --md-typeset-color:     #d4d4d4;
+  --md-typeset-a-color:   #CA6180;
+
+  --md-code-bg-color:     #1a1a1f;
+  --md-code-fg-color:     #FF85BB;
+
+  --md-footer-bg-color:       #111113;
+  --md-footer-bg-color--dark: #0d0d0d;
+}
+
+/* JetBrains Mono everywhere */
+body,
+.md-typeset,
+.md-nav,
+.md-header__title,
+.md-tabs__link {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Headings stay TEXT colour, never rose */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  color: #CA6180;
+  font-weight: 700;
+}
+
+/* Header bar: dark with a subtle border, no shadow */
+.md-header {
+  background-color: #111113;
+  border-bottom: 1px solid #252528;
+  box-shadow: none;
+}
+.md-header__title { color: #D6336C; }
+
+/* Active sidebar item = rose */
+.md-nav__link--active,
+.md-nav__item--active > .md-nav__link {
+  color: #D6336C;
+  font-weight: 700;
+}
+
+/* Inline code chips */
+.md-typeset code {
+  background-color: #1a1a1f;
+  color: #FF85BB;
+}
+
+/* Search box */
+.md-search__form { background-color: #1a1a1f; }
+
+/* Rose scrollbar + selection */
+::selection { background: #D6336C; color: #111113; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111113; }
+::-webkit-scrollbar-thumb { background: #D6336C; border-radius: 3px; }
+
+/* Body paragraphs in muted grey, like the project-card descriptions */
+.md-typeset p,
+.md-typeset li {
+  color: #d4d4d4;
+}
+
+/* Keep strong/bold readable (rose) for emphasis */
+.md-typeset strong {
+  color: #CA6180;
+}

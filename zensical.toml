@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────
+#  byteGirl — Documentation
+# ─────────────────────────────────────────────
+
+[project]
+logo = "images/logo.png"
+site_name = "byteGirl — Documentation"
+site_description = "Security notes, homelab setup & methodology"
+site_author = "byteGirl"
+copyright = "&copy; 2026 byteDoc"
+site_url = "https://docu.bytegirl.be"
+extra_css = ["stylesheets/extra.css"]
+
+# Enables icons + emojis (required for the `icon:` frontmatter)
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.pymdownx.emoji]
+
+[project.theme]
+favicon = "img/favicon.png"
+features = [
+    "search.highlight"
+]
+palette.scheme = "slate"
+palette.primary = "custom"
+palette.accent = "custom"
+font.text = "JetBrains Mono"
+font.code = "JetBrains Mono"
+
+[project.theme.icon]
+logo = "lucide/terminal"
