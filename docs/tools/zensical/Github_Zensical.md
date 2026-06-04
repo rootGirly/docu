@@ -1,10 +1,10 @@
 ---
 icon: simple/github
-title: Continous Integration
+title: CI/CD
 description: How this site auto-deploys to the VPS on every push.
 ---
 
-## Continous Integration/Continuous deployment
+## Continous Integration - Continuous deployment
 
 This is how this very site ships itself. Push to `main`, and GitHub Actions builds it and rsyncs it to the VPS. No manual uploads, no forgetting a step. If you ever rebuild this pipeline, start here.
 
