@@ -140,27 +140,7 @@ zensical serve
 
 Open `http://localhost:8000`. Serving the built `site/` folder directly is exactly how the real server treats it what you see is what ships.
 
-## Going live
 
-`site/` is just static files. On the VPS, Caddy serves it:
-
-```
-docu.bytegirl.be {
-    root * /var/www/docu.bytegirl.com
-    file_server
-    encode gzip
-}
-```
-Caddy Validation file
-
-```bash
-caddy validate --config /etc/caddy/Caddyfile
-sudo systemctl reload caddy
-```
-
-Caddy does HTTPS automatically. Push to GitHub, let the Action build and rsync `site/` to the VPS, done. (Deploy workflow is documented in its own note.)
-
----
 
 ## Final thought
 
