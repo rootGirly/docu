@@ -1,7 +1,3 @@
----
-title: Welcome
-icon: simple/gnometerminal
----
 # ~/Welcome to byteDocs
 
 > **Role:** Cybersecurity Practitioner  
@@ -42,8 +38,8 @@ A curated collection of production-ready (and lab-tested) configurations:
 
 
 👩🏻‍💻 **If you're reading this and you're not me:**  
-> Hi! Feel free to learn from my mistakes. There are plenty. 🩷
-
+> Hi! Feel free to learn from my mistakes. There are plenty. 🩷 If you think this can be improve please send me an e-mail.
+ 
 
 
 ### Security Disclaimer
