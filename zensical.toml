@@ -7,7 +7,7 @@ logo = "images/logo.png"
 site_name = "byteDocs"
 site_description = "Security notes, homelab setup & methodology"
 site_author = "byteGirl"
-copyright = "&copy; 2026 byteDoc"
+copyright = "&copy; 2026 byteDocs"
 site_url = "https://docu.bytegirl.be"
 extra_css = ["stylesheets/extra.css"]
 
