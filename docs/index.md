@@ -10,7 +10,7 @@ icon: simple/gnometerminal
 
 This is my personal **Knowledge Base & Lab Documentation**. It's a centralized repository where I dump configurations, commands, and "aha!" moments so I don't have to rediscover them three months from now when I've completely forgotten how I set up that one specific config.
 
-*(Reminder: byteGirl Keep this updated. Stale documentation is dangerous documentation.)*
+
 
 ## Why this exists
 
@@ -30,6 +30,7 @@ A curated collection of production-ready (and lab-tested) configurations:
 - **🔒 Security & Hardening**
 - **💾 Backups & Recovery**
 - **🤖 Automation & Scripting**
+- **🛡️ Vulnerability Management**
 
 
 ##  How to use it
