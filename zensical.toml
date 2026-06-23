@@ -3,7 +3,6 @@
 # ─────────────────────────────────────────────
 
 [project]
-logo = "images/logo.png"
 site_name = "byteDocs"
 site_description = "Security notes, homelab setup & methodology"
 site_author = "byteGirl"

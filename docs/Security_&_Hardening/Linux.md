@@ -8,8 +8,8 @@ icon: simple/linux
 
 # Linux System Hardening: A Defense-in-Depth Architecture
 
-## Executive Summary
-This document outlines a security engineering framework for hardening Linux infrastructure. Rather than a simple checklist of commands, this guide maps specific technical controls to **threat vectors**, defines **implementation patterns** for reproducibility, and establishes **validation metrics** to ensure control effectiveness.
+## Intro
+This document outlines a security engineering framework for hardening Linux infrastructure. Rather than a simple checklist of commands, this guide maps specific technical controls to **threat vectors**, defines **implementation** for reproducibility, and establishes **validation** to ensure control effectiveness.
 
 The approach follows the **Defense-in-Depth (DiD)** principle, layering physical, cryptographic, network, and identity controls to minimize the attack surface against determined adversaries.
 
