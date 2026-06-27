@@ -13,6 +13,7 @@ Windows Services create and manage critical functions such as network connectivi
 Press `Win + R`, type `services.msc`, and press Enter.
 
 ![Services screenshot](../img/services.jpg)
+>(source tryhackme)
 
 
 
@@ -138,9 +139,35 @@ Disable remote access (if not required) by going to `settings > Remote Desktop`
 
 
 
+## Application Hardenning
+
+### AppLocker
+
+Is a feature that allows users to block specific executables, scripts, and installers from execution through a set of rules.
 
 
 
+![AppLocker](../img/app_locker.png)
+>(source tryhackme)
+
+### Protecting the Browser through Microsoft Smart Screen
+
+
+To turn on the Smart Screen, go to `Settings > Windows Security > App and Browser Control > Reputation-based Protection`. Scroll down and turn on the SmartScreen option
+
+## Storage Management
+
+### Data Encryption Through BitLocker
+
+
+Go to `Start > Control Panel > System and Security > BitLocker Drive Encryption`
+
+
+### Windows Sandbox
+
+To run applications safely, I can use a temporary, isolated, lightweight desktop environment called Windows Sandbox.
+
+`Click Start > Search for 'Windows Features' and turn it on > Select Sandbox > Click OK to restart`
 
 
 
