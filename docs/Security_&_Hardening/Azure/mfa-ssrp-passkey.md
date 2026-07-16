@@ -267,3 +267,17 @@ You have MFA registration completed and have started to require MFA for login. H
 
 !!! note "Note"
     Bluetooth is required for the login to work; please continue to use a browser outside of your lab environment on the PC.
+    
+1. Open a new InPrivate browser.
+2. Connect to https://portal.azure.com.
+3. Log in as DeliaD with the username and password provided.
+4. On the Sign in with your passkey screen select iPhone, iPad, or Android.
+5. Select Next.
+6. Open your Camera on your phone, and Scan the QR-code provided on the screen.
+7. Select Sign in with a passkey.
+8. Select Continue.
+9. Enter your Authenticator login.
+10. You may close your camera on your phone, you phone is no longer needed.
+11. On you PC, choose Yes for the Stay signed in? dialog.
+
+**You are now successfully logged into your computer with a Phishing resistant MFA sign-in.**
