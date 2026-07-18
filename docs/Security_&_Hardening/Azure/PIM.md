@@ -1,7 +1,9 @@
 ---
-title: Implement and configure Privileged Identity Management (PIM)
+title: Introduction to Privileged Identity Management (PIM)
 icon: lucide/shield-check
 ---
+
+# Introduction to Privileged Identity Management (PIM)
 
 ### Key Concepts:
 
@@ -11,6 +13,7 @@ icon: lucide/shield-check
 * **Eligible assignment:** you hold the entitlement to a role but don't hold the role itself until you explicitly request **an activation**.
 * **Active assignment:** grants the role directly, making access immediate without any activation step
 * **Role settings** are the per-role configuration in PIM that governs the conditions any eligible user must satisfy before PIM grants access to that role.
+* **Break-glass account** (also known as an emergency access account) in Microsoft Entra ID is a dedicated, high-privilege account used exclusively to regain access to the tenant during critical failures, such as Conditional Access misconfigurations, widespread MFA outages, or identity provider failures
 
 
 **Scope Global Administrator in Microsoft Entra ID:**
@@ -185,5 +188,34 @@ Azure OpenAI and Azure Machine Learning control planes carry Critical-tier risk.
 * Inspect fine-tuning datasets
 
 
+### The principal boundary, humans versus workload identities.
+
+* **An eligible role works** through an interactive session — MFA, justification, and approval if policy requires it.
+* **A managed identity:** assigned directly to Azure resources such as container apps, virtual machines, and functions—authenticates non-interactively.
+
+![Microsoft Workload identities](https://learn.microsoft.com/en-us/training/wwl-sci/implement-configure-privileged-identity-management/media/privileged-human-vs-workload-access.png)
 
 
+**The clean two-track rule**: PIM governs the humans who configure, deploy, and manage AI services. RBAC governs the workload identities that run them.
+
+
+## Patterns for JIT access design
+
+| **Patterns** | **When to apply** | **What it prevents** | **Key trade-off** |
+| ---- | --- | ---- | --- |
+| Eligible by default, activate when needed | All roles except break-glass and workload identities | Standing privilege, unlimited exploitation window | Activation friction for routine tasks |
+| Short activation windows for production | Critical and High-tier resources (production subscriptions, Key Vault, AI control planes) | Prolonged access after task completes | Requires reactivation for extended work |
+| Approval for high-privileged roles | Critical-tier roles where a single activation could cause irreversible damage | Unilateral privilege escalation | Approval latency; requires designated approvers |
+| Regular access reviews | All eligible assignments, quarterly minimum | Privilege accumulation; stale assignments | Operational overhead for reviewers |
+| Emergency access excluded from JIT | Break-glass accounts only | JIT dependency failure during an outage | Must compensate with maximum monitoring and documented procedure |
+
+### The break-glass exception
+
+Break-glass accounts are excluded from JIT not because they're exempt from governance, but because PIM's activation path—which depends on multifactor authentication (MFA), approver availability, and service health—can itself fail during the outage conditions that require emergency access.
+
+!!! failure ""
+
+    Break-glass accounts must never be used for routine tasks. Any activation should trigger an immediate investigation to determine whether the use was authorized and whether underlying access gaps need to be addressed.
+    
+    
+>A privileged access strategy holds together not because every control is configured, but because the decisions behind those controls can be explained and defended
