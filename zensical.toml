@@ -29,7 +29,7 @@ custom_fences = [
 ]
 
 [project.theme.icon.admonition]
-note = "octicons/tag-16"
+note = "material/note-text"
 abstract = "octicons/checklist-16"
 info = "octicons/info-16"
 tip = "octicons/squirrel-16"
