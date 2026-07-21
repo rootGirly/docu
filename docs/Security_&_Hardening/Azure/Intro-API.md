@@ -17,6 +17,7 @@ icon: material/api
 ##  Two common ways of how APIs are secured.
 
 * **One of the common ways to secure APIs is by using API keys**: API keys are arbitrary strings that API owners issue to grant you access to the API
+* **Another common pattern of securing APIs is by using OAuth.**: OAuth is an industry-standard protocol for authorization. OAuth secures access to resources using access tokens.
 
 
 
@@ -69,12 +70,24 @@ Get a tenant as regular user with Free Trial Version (if you don't have one) - T
 2. Enable custom app upload/sideloading (needed for testing your agent).
 _This is the setting that actually matters for the exercise (letting VS Code push your test agent into Copilot):_
 
-1. Go to the Microsoft 365 [admin center](https://admin.microsoft.com
+1. Go to the Microsoft 365 TEAMS [admin center](https://admin.teams.microsoft.com/
 ) 
+[Documentation](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/prerequisites)
 2. Sign in as the Global Admin
 3. Navigate to **Settings → Integrated apps**
 4. On the right, click Upload custom apps
 5. Make sure sideloading/custom app deployment is allowed for your test account — for a Developer Program tenant this is typically already on
+
+### Trouble shooting : Enable Custom App Upload
+
+[Official Documentation](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/prerequisites)
+
+1. Go to the Teams admin center instead: https://admin.teams.microsoft.com (separate portal, same login)
+2. Teams **apps → Setup policies**
+3. Click on the Global (Org-wide default) policy
+4. Find **"Upload custom apps"** toggle → turn it **On**
+5. Save
+
 
 ### In Visual Studio Code:
 
@@ -194,4 +207,60 @@ In this project, I use Microsoft 365 Agents Toolkit to add the API key to the va
 The task takes the value of the `SECRET_API_KEY` project variable, stored in the env/.env.local.user file and registers it in the vault. Then, it takes the vault entry ID and writes it to the environment file env/.env.local. The outcome of this task is an environment variable named `APIKEY_REGISTRATION_ID`. Microsoft 365 Agents Toolkit writes the value of this variable to the appPackages/ai-plugin.json file that contains the plugin definition. At runtime, the declarative agent that loads the API plugin, uses this ID to retrieve the API key from the vault, and call the API securely.
       
       
+## Configure API key for local development
+
+Before you can test the project, you need to define an API key for your API. Then, store the API key in the vault and record the vault entry ID in your API plugin. For local development, store the API key in your project and use Microsoft 365 Agents Toolkit to register it in the vault for you.
+
+**In Visual Studio Code:**
+
+1. Open the Terminal pane.
+1. In a command line:
+	3. Restore project's dependencies, by running `npm install`.
+	4. Generate a new API key by running: `npm run keygen`.
+	5. Copy the generated key to clipboard.
+1. Open the env/.env.local.user file.
+1. Update the `SECRET_API_KEY` property to the newly generated API key. The updated property looks as follows:
+
+	``` yaml
+	SECRET_API_KEY=your_key
+	```
+
+1. Save your changes.
+
+Each time you build the project, Microsoft 365 Agents Toolkit automatically updates the API key in the vault and updates your project with vault entry ID.
+
+## Test the declarative agent with the API plugin in Microsoft 365 Copilot
+
+The final step is to test the declarative agent with the API plugin in Microsoft 365 Copilot.
+
+**In Visual Studio Code:**
+
+1. In the Activity Bar, activate the **Microsoft 365 Agents Toolkit** extension.
+1. In the Microsoft 365 Agents Toolkit extension panel, in the Accounts section, be sure you're signed in to your Microsoft 365 tenant with Copilot enabled.
+	![Microsoft 365 Toolkit](https://learn.microsoft.com/en-us/training/m365-developer/copilot-declarative-agent-api-plugin-auth/media/3-m365-agents-toolkit-account.png)
+	
+1. In the Activity Bar, switch to the Run and Debug view.
+2. From the list of configurations, choose Debug in Copilot (Edge) and press the play button to start debugging.
+	![Microsoft Copilot](https://learn.microsoft.com/en-us/training/m365-developer/copilot-declarative-agent-api-plugin-auth/media/3-vs-code-debug.png)
+3. Visual Studio Code opens a new web browser with Microsoft 365 Copilot. If prompted, sign in with your Microsoft 365 account.
+
+**In the :** [web browser DEV.TEAMS](https://dev.teams.microsoft.com)
+
+1. From the side panel, select the **da-repairs-keylocal** agent.
+2. In the prompt text box, type What repairs are assigned to Karin? and submit the prompt.
+3. Confirm that you want to send data to the API plugin using the Always allow button.
+	![Copilot declarative Agent API](https://learn.microsoft.com/en-us/training/m365-developer/copilot-declarative-agent-api-plugin-auth/media/3-allow-data.png) 	
+4. Wait for the agent to respond.
+5. Aprouval on: https://admin.cloud.microsoft
+	6. 	**Agents --> All Agents**
+5. Testing your chat (https://m365.cloud.microsoft/chat/)
+6. 
+
+
+# Integrate an API plugin with an API secured with OAuth
+
+To get an access token, you register an application with the identity provider and specify its type, such as public- or confidential client.
+
+![API secure OAuth](https://learn.microsoft.com/en-us/training/m365-developer/copilot-declarative-agent-api-plugin-auth/media/4-diagram-oauth.png)
+
 
