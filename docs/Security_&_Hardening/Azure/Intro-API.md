@@ -1,6 +1,6 @@
 ---
 title: Authenticate your API plugin for declarative agents with secured APIs
-icon: material/Api
+icon: material/api
 ---
 
 # Securing APIs
