@@ -9,6 +9,7 @@ site_author = "byteGirl"
 copyright = "&copy; 2026 byteDocs"
 site_url = "https://docu.bytegirl.be"
 extra_css = ["stylesheets/extra.css"]
+extra_javascript = ["javascripts/mermaid.mjs"]
 
 # Enables icons + emojis (required for the `icon:` frontmatter)
 [project.markdown_extensions.admonition]
