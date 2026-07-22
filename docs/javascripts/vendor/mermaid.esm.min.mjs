@@ -1,1 +1,0 @@
-Redirecting to /mermaid@11.16.0/dist/mermaid.esm.min.mjs
