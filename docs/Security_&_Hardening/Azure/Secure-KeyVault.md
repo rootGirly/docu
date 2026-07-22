@@ -217,7 +217,7 @@ Microsoft Defender for Key Vault detects unusual and potentially harmful access 
 
     > **Note**: Enabling Defender for Key Vault activates threat detection across all Key Vaults in the subscription, including the vault you created in this lab. Alerts are generated for anomalies such as access from Tor exit nodes, access from atypical geographic locations, and bulk secret retrieval patterns that may indicate a credential harvesting attempt.
 
-1. Navigate back to your Key Vault, **sc500-kv-@lab.LabInstance.Id**.
+1. Navigate back to your Key Vault, **sc500KV**.
 
 1. In the left menu, under **Monitoring**, select **Diagnostic settings**.
 
