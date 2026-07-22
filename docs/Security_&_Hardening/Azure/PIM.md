@@ -3,6 +3,10 @@ title: Introduction to Privileged Identity Management (PIM)
 icon: lucide/shield-check
 ---
 
+## Overview
+
+Privileged Identity Management (PIM) is a service in Microsoft Entra ID that enables you to manage, control, and monitor access to important resources in your organization. These resources include resources in Microsoft Entra ID, Azure, and other Microsoft Online Services such as Microsoft 365 or Microsoft Intune. 
+
 # Introduction to Privileged Identity Management (PIM)
 
 ### Key Concepts:

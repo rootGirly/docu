@@ -263,4 +263,13 @@ To get an access token, you register an application with the identity provider a
 
 ![API secure OAuth](https://learn.microsoft.com/en-us/training/m365-developer/copilot-declarative-agent-api-plugin-auth/media/4-diagram-oauth.png)
 
+I register my development OAuth information in the vault myself, either manually by going to the:
+
+1. [Teams Developer Portal](https://dev.teams.microsoft.com) and from the **Tools** section opening** OAuth client registration**, or using Microsoft 365 Agents Toolkit. 
+2. In production, typically an administrator registers the OAuth information and gives you the ID of the vault entry to use in your API plugin.
+
+![OAuth](https://learn.microsoft.com/en-us/training/m365-developer/copilot-declarative-agent-api-plugin-auth/media/4-developer-portal-oauth-client-registration.png#lightbox)
+
+
+
 
