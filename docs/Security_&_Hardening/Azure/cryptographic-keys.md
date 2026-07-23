@@ -127,3 +127,43 @@ To set an expiry date on an existing secret version in the portal:
 4. Set the **Expiration date** and select Save.
 
 ![Set an expiry date](https://learn.microsoft.com/en-gb/training/wwl-sci/manage-keys-secrets-key-vault/media/set-secret-expiration.png)
+
+
+### Configure Key Vault references for applications
+
+The most operationally elegant secret rotation pattern is one where the application never needs to be redeployed. **Key Vault references** in **Azure App Service** and A**zure Functions** makes seamless application key usage possible.
+
+Instead of storing a connection string directly in an app setting, you store a reference:
+
+``` bash
+@Microsoft.KeyVault(SecretUri=https://<vault-name>.vault.azure.net/secrets/<secret-name>)
+```
+
+### single-credential rotation
+
+The simplest rotation pattern for a secret is single-credential rotation: one secret, updated to a new value in a single atomic operation.
+
+1. Generate a new credential (password, key, token).
+2. Update the target system to accept the new credential.
+3. Update the secret in Key Vault with the new value (creating a new version).
+4. The application reads the new value at the next request.
+
+The challenge with single-credential rotation is the brief transition window between steps 2 and 3 (or 3 and 4). If the application reads the old version before the new value is live in the target system, the authentication fails.
+
+### Dual-Credential rotation
+
+Dual-credential rotation eliminates the transition window by maintaining two valid credentials simultaneously in the target system. The pattern accommodates the full rotation cycle without a moment when both the application and the target system agree on a valid credential.
+
+**Walkthrough**
+
+* **Set up**: The database has two sign-in credentials - `db-user-a` and `db-user-b`. Both are valid. The vault's active secret contains the password for `db-user-a`. The application uses the secret (versionless URI) to authenticate.
+* **Rotate credential B first**: Generate a new password for `db-user-b`. Update the database sign-in for `db-user-b` with the new password. The application is still using `db-user-a` - nothing disrupts it.
+* **Store credential B as the new secret version**: Add the new `db-user-b` password to Key Vault as a new version of the secret. The versionless reference in the application now resolves to `db-user-b`.
+* **Verify the application uses credential B**: Confirm the application is authenticating with `db-user-b`. You can validate this through query logs, connection tracing, or diagnostic logs.
+* **Rotate credential A**: Now that the application runs on `db-user-b`, generate a new password for `db-user-a`. Update the database sign-in. The application isn't using `db-user-a`, so this change causes zero disruption.
+* **Store credential A as the next secret version:** Add the new `db-user-a` password as the next version. The cycle is complete.
+
+Credentials alternate on each rotation cycle. At no point, does a rotation event leave the application without a valid credential in the target system.
+
+
+
