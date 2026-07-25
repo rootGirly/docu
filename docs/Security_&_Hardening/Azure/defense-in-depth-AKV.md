@@ -148,6 +148,103 @@ When the scanning engine finds secrets, **recommendations are triggered** under 
 **What is attack path analysis?**
 Attack paths show the riskiest security issues in your environment so you can prioritize your remediation efforts on exploitable paths attackers might use.
 
+!!! important
 
+    **Cloud Security Posture Management (CSPM)** secret scanning finds credentials that already escaped Key Vault. **Microsoft Defender for Key Vault** takes a different approach—it assumes the vault is properly configured and watches for threat actors trying to access what's inside it. 
+    
+one scans the environment for misplaced secrets; the other monitors the vault itself for suspicious access patterns.
+
+Cloud's Cloud Workload Protection Platform (**CWPP**) - that provides threat detection specific to Key Vault. Being part of **CWPP** distinguishes it from **CSPM** plans, which focus on posture and exposure. CWPP plans like this one focus on active threats against running workloads.
+
+Defender for Cloud was active on the subscription, but activating Defender for Cloud **doesn't automatically activate every workload protection plan**. Each plan must be explicitly enabled
+
+#### Enabling Microsoft Defender for Key Vault
+
+1. **Microsoft Defender for Cloud** > **Environment settings**
+2. Select your subscription
+3. Toggle on **Microsoft Defender** for Key Vault
+
+!!! important
+
+    Microsoft Defender for Key Vault isn't enabled by default. A subscription with Defender for Cloud active but without this plan has no anomalous access alerting for its vaults.
+    
+![Microsoft Defender Cloud](https://learn.microsoft.com/en-gb/training/wwl-sci/defend-key-vault-defender-cloud/media/set-key-vault-policy.png)
+
+
+### Identifying what Defender for Key Vault monitors
+
+Defender for Key Vault analyzes access patterns and logs from Azure Key Vault's control plane and data plane operations. 
+
+* **Access from a suspicious IP address or TOR exit node** : (`KV.SuspiciousIPAccess, KV.TORAccess`)
+Access to the vault originated from an IP address associated with a known threat actor, a scanning infrastructure, or The Onion Router (TOR) exit node.
+
+* **High volume of operations** (`KV.OperationVolumeAnomaly`) The vault received an unusually high number of operations in a short time window. 
+* **Suspicious policy change followed by secret queries** (`KV.PutGetAnomaly`) A vault access policy was modified and then, within a short period, secrets were retrieved by an identity that typically doesn't access this vault.
+* **Unusual application usage** (`KV.AnomalousAccessOperation`) The vault was accessed by an application identity not previously seen on this vault, or an application that changed its access behavior. 
+
+**When Defender for Key Vault generates an alert, it surfaces in three places:**
+
+* The **Security** page of the specific Key Vault in the Azure portal
+* The **Workload** protections dashboard in Defender for Cloud
+* The **Security alerts** page in Defender for Cloud
+
+Configure notifications under Defender for **Cloud > Environment settings** > **Email notifications**
+
+### Differences between Defender for Key Vault and CSPM scanning
+
+Defender for Key Vault protects the vault from external threats. Defender CSPM scanning protects the environment from secrets exposed outside the vault.
+
+**When an alert fires, follow these four steps:**
+
+![Microsoft Defender](https://learn.microsoft.com/en-gb/training/wwl-sci/defend-key-vault-defender-cloud/media/alert-response-four-steps.png#lightbox)
+
+1. **Identify the source** - determine the identity that triggered the alert and is it recognized.
+2. **Respond to the immediate threat** - restrict or remove access to stop further exposure.
+3. **Measure the impact** - determine which secrets were accessed and for how long.
+4. **Take action** - rotate affected credentials and notify downstream application owners.
+
+### Identify the source (Step 1)
+
+Your first task is to determine whether the access was from a known identity in your Azure tenant.
+
+Cross-reference the **Object ID** against my **Microsoft Entra ID** to find the identity: 
+
+* A user account
+* A service principal
+* A managed identity
+* An AI agent workload identity. 
+
+If I recognize the identity, contact the application owner or the user directly and ask whether the activity was expected.
+
+### Respond to the immediate threat (Step 2)
+
+The response action depends on where the suspicious access originated.
+
+![Step 2 - Responding to threats](https://learn.microsoft.com/en-gb/training/wwl-sci/defend-key-vault-defender-cloud/media/alert-response-step-2-decision.png)
+
+* **Unrecognized IP address or The Onion Router (TOR)** exit node: The vault firewall is your first control. Navigate to the Key Vault in the Azure portal, open **Networking**, and enable the firewall if it isn't already active.
+* **Unauthorized application or suspicious user**: Navigate to **Key Vault** > **Access control (IAM)** and remove the role assignment for the suspicious identity.
+
+
+### Measure the issue (Step 3)
+
+Open the **Security** page on the affected Key Vault and select the triggered alert. Review the list of secrets and keys that were accessed and their access timestamps. The list gives your SOC team the starting point they need: which vault, which objects, and when.
+
+
+### Take action (Step 4)
+
+With the threat contained and the issue measured, complete the response.
+
+
+* **Rotate all affected credentials**. For each secret, key, or certificate that the suspicious identity accessed: disable or delete the current version in Key Vault and create a new version.
+* **Notify downstream application owners**. Identify each application that uses the rotated credentials.
+* **For service-to-service credentials**: If a compromised service principal is the source, work with the identity team to rotate the client secret or certificate for that service principal, and audit other resources that service principal had access to.
+* **Monitor the vault after remediation**. After rotating credentials and removing compromised access, watch the vault closely for 48 to 72 hours using the Security alerts page in Defender for Cloud.
+
+### Security recommendations : Microsoft Cloud Security Benchmark (MCSB)
+
+* **Key vaults should have soft delete enabled:**  Prevents accidental or malicious permanent deletion of vault objects
+* **Key vaults should have purge protection enabled:** Prevents bypass of soft-delete retention.
+* **Diagnostic logs in Key Vault should be enabled:**  Ensures you have the audit data needed for Step 3 of every incident response.
 
 
