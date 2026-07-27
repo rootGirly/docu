@@ -9,7 +9,7 @@ As part of my home lab / personal security stack, I wanted visibility into my ow
 
 [Uptime Kuma](https://uptimekuma.co/) is an easy-to-use self-hosted monitoring tool, so I used it to build my own external monitoring and alerting pipeline.
 
-![Uptime Kuma](https://user-images.githubusercontent.com/1336778/212262296-e6205815-ad62-488c-83ec-a5b0d0689f7c.jpg)
+![Uptime Kuma](img/UpTime_Dashboard.jpg)
 
 ## Step 1: Uptime Kuma on Proxmox (the core piece)
 
@@ -151,6 +151,6 @@ I add two monitors to start: one checks if my cloud itself is responding, the ot
 ### Testing
 
 ![Testing the System](img/DownTest.jpg)
-![Telegram's notification](img/Telegram.jpeg)
+![Telegram's notification](img/Telegram.jpg)
 
 Easy to set up, and now I know when something is happening with my services pushed directly to my mobile phone.
