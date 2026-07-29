@@ -211,5 +211,80 @@ Azure Policy prevents noncompliant resources from being created, but critical re
 | **Delete** | Prevents resource deletion; allows read and write operations | Virtual networks, Network Security Groups (NSGs), Recovery Services vaults, Key Vaults, DNS zones |
 | **ReadOnly** | Prevents resource deletion and modification; allows read operations only | Configuration-only resources with no runtime write operations |
 
-## Difference between Delete and ReadOnly locks
+### Difference between Delete and ReadOnly locks
+
+**Delete lock**, Azure prevents the resource from being deleted while still allowing all read and write operations to succeed. This lock type protects production resources from accidental deletion without interfering with normal operations, making it the most commonly used lock type.
+
+**ReadOnly lock**, Azure prevents the resource from being deleted or modified, allowing only read operations. This lock type requires careful consideration because it can cause unexpected failures in some scenarios. Applying a **ReadOnly lock** to an Azure Storage account prevents listing storage keys, because key listing is treated as a write action even though it appears to be read-only. Similarly, a ReadOnly lock on a virtual network can prevent virtual machines from starting in some configurations.
+
+
+
+### Who can create and remove locks
+
+**Resource locks** provide separation of duties between users who manage resources and users who control governance. Creating or deleting a resource lock requires the `Microsoft.Authorization/locks/write` and `Microsoft.Authorization/locks/delete` permissions, which are granted by the **Owner** and **User Access Administrator** built-in roles.
+
+### Applying a resource lock in the portal
+
+1. Navigate to the resource or resource group you want to protect
+2. Under **Settings**, select **Locks**
+3. Select **+ Add**
+4. Enter a Lock name that describes the purpose (for example, network-core-delete-lock)
+5. Set Lock type to Delete or ReadOnly based on the required protection level
+6. Optionally add notes explaining why the lock is applied and when it can be removed
+7. Select OK
+
+
+# Configure Defender for Cloud and manage security standards
+
+Configuring Microsoft Defender for Cloud correctly ensures the tool generates accurate, actionable recommendations that align with your organization's security and compliance requirements. Having **847** recommendations reflect gaps across multiple security standards.
+
+Before I can remediate findings, I need to configure Defender for Cloud's environment settings and assign the right security standards at the appropriate scope.
+
+## Environment settings configure before you govern
+
+Defender for Cloud environment settings is where you configure per-subscription settings for data collection, autoprovisioning of monitoring agents, and workload protection plan coverage.
+
+**Defender for Cloud can automatically deploy:**
+
+* **Azure Monitor Agent**: Collects security events from VMs and Arc-connected machines.
+* **Defender for Endpoint sensor:** provides endpoint detection and response capabilities on Windows and Linux VMs
+* **Vulnerability assessment agent:** scans VMs for missing patches, misconfigurations, and installed software vulnerabilities.
+
+
+## Security standards what generates recommendations.
+
+Security standards are collections of security controls. Each control contains one or more policy definitions that evaluate resource configurations.
+
+
+| **Standard** | **Description** | **Use case** |
+| ------ | ---- | ---- |
+| Microsoft Cloud Security Benchmark (MCSB) | Default baseline covering identity, network, data protection, compute, and logging controls | Foundational security posture assigned to every subscription automatically |
+| CIS Microsoft Azure Foundations Benchmark | Community-developed best practices for Azure security configuration | Demonstrate alignment with industry-standard hardening guidance|
+| NIST SP 800-53 | US government security controls framework | Federal compliance or vendors serving federal agencies |
+| ISO 27001 | International information security management standard | Global compliance for data handling and security management |
+| PCI DSS | Payment card industry data security requirements | Organizations processing credit card transactions |
+| SOC 2 | Trust service criteria for security, availability, and confidentiality | SaaS providers demonstrating controls to customers |
+
+
+**Microsoft Cloud Security Benchmark** is the default standard assigned to every subscription when Defender for Cloud is enabled. It provides the baseline security posture for Azure resources. You can't remove **MCSB** it remains assigned regardless of what other standards you add. **MCSB** covers:
+
+* Identity controls (MFA enforcement, privileged access management)
+* Network controls (private endpoints, network segmentation).
+* Data protection (encryption at rest and in transit)
+* Compute security (patch management, secure configurations), 
+* Logging and monitoring (diagnostic settings, audit trails).
+
+#### Adding a regulatory standard e.g
+
+* Environment settings → select a subscription, or management group → Security policies → Add more standards → select from the list of built-in standards. 
+
+
+### How standards generate recommendations
+
+Each policy definition in security standard maps to a security control. When a resource violates the policy definition, Defender for Cloud surfaces a recommendation.
+
+
+
+
+
 
