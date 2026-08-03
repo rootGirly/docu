@@ -283,6 +283,24 @@ Security standards are collections of security controls. Each control contains o
 
 Each policy definition in security standard maps to a security control. When a resource violates the policy definition, Defender for Cloud surfaces a recommendation.
 
+Recommendations in Microsoft Defender for Cloud represent missing or misconfigured security controls. The Cloud and AI Security Engineer's job is deploying those controls to resources at scale
+
+### Remediation workflow
+
+A recommendation in Defender for Cloud identifies a specific security gap on one or more resources. The remediation workflow is straightforward:
+
+* Review the recommendation
+* Select the deployment mechanism that fits the control type
+* Execute the deployment
+* Verify the control is active and the recommendation is resolved
+
+## Governance rules—assign ownership and enforce a compliance deadline
+
+Ensure recommendations don't sit unactioned for months the owner receives email notifications, the recommendation appears in their "My items" dashboard in Defender for Cloud, and overdue items are escalated.
+
+Governance rules let the security team operate at scale without manually triaging every recommendation. The rule enforces accountability automatically, and the governance report shows which teams are meeting deadlines, and which teams have overdue items.
+
+
 
 
 
